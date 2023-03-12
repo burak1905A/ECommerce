@@ -1,0 +1,121 @@
+﻿@model List<ProductViewModel>
+
+@{
+    ViewData["Title"] = "Ürün Listesi";
+    ViewData["Description"] = "123";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <a asp-controller="Product" asp-action="Insert" class="btn btn-primary">Yeni Kayıt</a>
+                    <h3 class="title">List <span>/ Ürünler</span></h3>
+                    <div class="table-responsive">
+                        <table class="table table-bordered data-table data-table-default">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                <th>FullName</th>
+                                <th>Sku</th>
+                                <th>Tax</th>
+                                <th>Status</th>
+                                <th>Gift</th>
+                                <th>StockAmount</th>
+                                <th>ProductDetail</th>
+                                <th>Price1</th>
+                                <th>####</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (ProductViewModel item in Model)
+                                {
+                                    <tr>
+                                       <td>@item.Name</td>
+                                    <td>@item.FullName</td>
+                                    <td>@item.Sku</td>
+                                    <td>@item.Tax</td>
+                                    <td>@item.Status</td>
+                                
+                                    <td>@item.ProductDetail</td>
+                                    <td>@item.Price1</td>
+                                    <td><partial name="PartialViews/_StatusPartial" model="item.Status" /></td>
+                                    <td>
+                                            <a asp-controller="Product" asp-action="Activate" asp-route-id="@item.Id" class="btn btn-danger">Activate</a>
+                                            <a asp-controller="Product" asp-action="Update" asp-route-id="@item.Id" class="btn btn-success">Update</a>
+                                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="content-body">
+    <div class="row justify-content-between align-items-center mb-10">
+        <div class="col-12 col-lg-auto mb-20">
+            <div class="page-heading">
+                <h3 class="title">List <span>/ Products</span></h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-30">
+            <div class="box">
+                <div class="box-head">
+                    <a asp-controller="Product" asp-action="Insert" class="btn btn-primary">Yeni Kayıt</a>
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered data-table data-table-default">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>FullName</th>
+                                <th>Sku</th>
+                                <th>Tax</th>
+                                <th>Status</th>
+                                <th>Gift</th>
+                                <th>StockAmount</th>
+                                <th>ProductDetail</th>
+                                <th>Price1</th>
+                                <th>####</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ProductViewModel item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.FullName</td>
+                                    <td>@item.Sku</td>
+                                    <td>@item.Tax</td>
+                                    <td>@item.Status</td>
+                                
+                                    <td>@item.ProductDetail</td>
+                                    <td>@item.Price1</td>
+                                    <td><partial name="PartialViews/_StatusPartial" model="item.Status" /></td>
+                                    <td>
+                                        <a asp-controller="Product" asp-action="Activate" asp-route-id="@item.Id" class="btn">Activate</a>
+                                        <a asp-controller="Product" asp-action="Update" asp-route-id="@item.Id" class="btn">Update</a>
+                                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id" class="btn">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@section scripts{
+    <script src="~/admin/assets/js/plugins/datatables/datatables.min.js"></script>
+    <script src="~/admin/assets/js/plugins/datatables/datatables.active.js"></script>
+}

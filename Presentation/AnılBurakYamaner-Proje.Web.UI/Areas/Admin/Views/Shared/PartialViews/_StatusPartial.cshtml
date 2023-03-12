@@ -1,0 +1,17 @@
+﻿@model Status
+
+@switch (Model)
+{
+    case Status.None:
+                <span class="badge badge-primary">İşlem Yapılmadı</span>
+        break;
+    case Status.Active:
+                <span class="badge badge-primary">Aktif</span>
+        break;
+    case Status.Deleted:
+                <span class="badge badge-danger">Silindi</span>
+        break;
+    case Status.Updated:
+                <span class="badge badge-info">Güncellendi</span>
+        break;
+}

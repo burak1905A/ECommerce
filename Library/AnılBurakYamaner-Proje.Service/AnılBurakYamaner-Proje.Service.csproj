@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>AnılBurakYamaner_Proje.Service</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\AnılBurakYamaner-Proje.Common\AnılBurakYamaner-Proje.Common.csproj" />
+    <ProjectReference Include="..\AnılBurakYamaner-Proje.Core\AnılBurakYamaner-Proje.Core.csproj" />
+    <ProjectReference Include="..\AnılBurakYamaner-Proje.Model\AnılBurakYamaner-Proje.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Service\" />
+  </ItemGroup>
+
+</Project>

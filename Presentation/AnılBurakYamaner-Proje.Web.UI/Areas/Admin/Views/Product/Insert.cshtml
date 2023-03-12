@@ -1,0 +1,172 @@
+﻿@model CreateProductViewModel
+@{
+    ViewData["Title"] = "Insert";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="page-header">
+        </div>
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Product</h4>
+
+                        <form asp-controller="Product" asp-action="Insert" method="post" enctype="multipart/form-data">
+                            <h4 class="title">About Product</h4>
+                            <div class="row">
+                                <div class="col-lg-12 col-12 mb-30">
+                                    <input asp-for="Name" class="form-control" type="text" placeholder="Name *">
+                                </div>
+                                <br />
+                                <div class="col-lg-12 col-12 mb-30">
+                                    <input asp-for="FullName" class="form-control" type="text" placeholder="FullName *">
+                                </div>
+                                <br />
+                                <div class="col-lg-12 col-12 mb-30">
+                                    <input asp-for="Slug" class="form-control" type="text" placeholder="Slug *">
+                                </div>
+                                <div class="col-lg-12 col-12 mb-30">
+                                    <select asp-for="BrandId" asp-items="@ViewBag.Brands" class="form-control">
+                                        <option>Please select Brand..</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 col-12 mb-30">
+                                    <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-control">
+                                        <option>Please select Category..</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 col-12 mb-30">
+                                    <select asp-for="Status" asp-items="Html.GetEnumSelectList<Status>()" class="form-control">
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 col-12 mb-30">
+                                    <input asp-for="ProductDetail" class="form-control" type="text" placeholder="Product Detail *">
+                                </div>
+                                <div class="col-lg-12 col-12 mb-30">
+                                    <input asp-for="Price1" class="form-control" type="text" placeholder="Product Price *">
+                                </div>
+                                <div class="col-lg-12 col-12 mb-30">
+                                    <input asp-for="Tax" class="form-control" type="text" placeholder="Vergi *">
+                                </div>
+                                <div class="col-lg-12 col-12 mb-30">
+                                    <input asp-for="Barcode" class="form-control" type="text" placeholder="Barcode *">
+                                </div>
+
+                                <br />
+                                <div class="col-lg-12 col-12 mb-30">
+                                    <input class="form-control" type="file" name="files">
+                                </div>
+                                <div class="col-lg-12 col-12 mb-30">
+                                </div>
+                                <br />
+
+                                <br />
+
+                            </div>
+                            <div class="row">
+                                <div class="d-flex flex-wrap justify-content-end col mbn-10">
+                                    <button class="button button-outline button-primary mb-10 ml-10 mr-0">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["Message"]
+        </div>
+    }
+</div>
+@*<div class="content-body">
+    <div class="row justify-content-between align-items-center mb-10">
+        <div class="col-12 col-lg-auto mb-20">
+            <div class="page-heading">
+                <h3>Blog <span>/ Add</span></h3>
+            </div>
+        </div>
+    </div>
+    <div class="add-edit-product-wrap col-12">
+        <div class="add-edit-product-form">
+            <form asp-controller="Product" asp-action="Insert" method="post" enctype="multipart/form-data">
+                <h4 class="title">About Product</h4>
+                <div class="row">
+                    <div class="col-lg-12 col-12 mb-30">
+                        <input asp-for="Name" class="form-control" type="text" placeholder="Name *">
+                    </div>
+                    <br />
+                    <div class="col-lg-12 col-12 mb-30">
+                        <input asp-for="FullName" class="form-control" type="text" placeholder="FullName *">
+                    </div>
+                    <br />
+                    <div class="col-lg-12 col-12 mb-30">
+                        <input asp-for="Slug" class="form-control" type="text" placeholder="Slug *">
+                    </div>
+                    <div class="col-lg-12 col-12 mb-30">
+                        <select asp-for="BrandId" asp-items="@ViewBag.Brands" class="form-control">
+                            <option>Please select Brand..</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12 col-12 mb-30">
+                        <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-control">
+                            <option>Please select Category..</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12 col-12 mb-30">
+                        <select asp-for="Status" asp-items="Html.GetEnumSelectList<Status>()" class="form-control">
+                        </select>
+                    </div>
+                    <div class="col-lg-12 col-12 mb-30">
+                        <input asp-for="ProductDetail" class="form-control" type="text" placeholder="Product Detail *">
+                    </div>
+                    <div class="col-lg-12 col-12 mb-30">
+                        <input asp-for="Price1" class="form-control" type="text" placeholder="Product Price *">
+                    </div>
+                    <div class="col-lg-12 col-12 mb-30">
+                        <input asp-for="Tax" class="form-control" type="text" placeholder="Vergi *">
+                    </div>
+                    <div class="col-lg-12 col-12 mb-30">
+                        <input asp-for="Barcode" class="form-control" type="text" placeholder="Barcode *">
+                    </div>
+                  
+                    <br />
+                    <div class="col-lg-12 col-12 mb-30">
+                        <input class="form-control" type="file" name="files">
+                    </div>
+                    <div class="col-lg-12 col-12 mb-30">
+                        
+                    </div>
+                    <br />
+                   
+                    <br />
+                   
+                </div>
+                <div class="row">
+                    <div class="d-flex flex-wrap justify-content-end col mbn-10">
+                        <button class="button button-outline button-primary mb-10 ml-10 mr-0">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["Message"]
+        </div>
+    }
+</div>
+*@
+@section scripts{
+    <script src="~/admin/assets/js/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="~/admin/assets/js/plugins/summernote/summernote.active.js"></script>
+    <script src="~/admin/assets/js/plugins/quill/quill.min.js"></script>
+    <script src="~/admin/assets/js/plugins/quill/quill.active.js"></script>
+}

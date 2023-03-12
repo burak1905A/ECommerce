@@ -1,0 +1,11 @@
+﻿@model List<ProductViewModel>
+
+<div class="widget widget-catgs">
+    <h3 class="widget-title">Ürünler</h3>
+    <ul class="catgs-links">
+        @foreach (ProductViewModel item in Model)
+        {
+                <li><a asp-controller="Home" asp-action="Post" asp-route-id="@item.Id" title="">@item.Name</a></li>
+        }
+    </ul>
+</div>

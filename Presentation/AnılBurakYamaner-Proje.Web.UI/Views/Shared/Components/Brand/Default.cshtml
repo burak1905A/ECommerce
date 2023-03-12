@@ -1,0 +1,12 @@
+﻿@model List<BrandViewModel>
+
+<div class="widget widget-catgs">
+    <h3 class="widget-title">Markalar</h3>
+    <ul class="catgs-links">
+        @foreach (BrandViewModel item in Model)
+        {
+                <li><a asp-controller="Home" asp-action="Posts" asp-route-id="@item.Id" title="">@item.Name</a></li>
+            
+        }
+    </ul>
+</div>
