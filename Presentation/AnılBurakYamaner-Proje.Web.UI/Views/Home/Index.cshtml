@@ -31,6 +31,9 @@
                                             <li><i class="la la-eye"></i>@item.FullName</li>
                                             <form asp-controller="Cart" asp-action="Post" method="post">
                                                 <input asp-for="@item.Id" class="form-control" type="text" hidden />
+                                                <input asp-for="@item.Price1" class="form-control" type="text" hidden />
+                                                <input asp-for="@item.Name" class="form-control" type="text" hidden />
+                                                <input asp-for="@item.Barcode" class="form-control" type="text" hidden />
                                             <button type="submit" title="">Add Cart</button>
                                             </form>
                                         </ul>

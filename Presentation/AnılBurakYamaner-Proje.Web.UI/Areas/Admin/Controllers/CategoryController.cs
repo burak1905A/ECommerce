@@ -41,6 +41,8 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Insert()
         {
+            if (User.Claims.FirstOrDefault(x => x.Type == "IsAdmin")?.Value != "True")
+                return Redirect("/Home/Index");
             return View();
         }
 
@@ -64,6 +66,8 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
+            if (User.Claims.FirstOrDefault(x => x.Type == "IsAdmin")?.Value != "True")
+                return Redirect("/Home/Index");
             UpdateCategoryViewModel model = new UpdateCategoryViewModel();
             var updateResult = await _categoryApi.Get(id);
             if (updateResult.IsSuccessStatusCode && updateResult.Content.IsSuccess && updateResult.Content.ResultData != null)

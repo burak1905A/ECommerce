@@ -28,7 +28,11 @@ namespace AnılBurakYamaner_Proje.Web.UI.APIs
         [Get("/user/activate/{id}")]
         Task<ApiResponse<WebApiResponse<bool>>> Activate(Guid id);
 
-        [Get("/user/getactive")]
+
+		[Get("/user/exists/{email}")]
+		Task<ApiResponse<WebApiResponse<bool>>> ExistsUser(string email);
+
+		[Get("/user/getactive")]
         Task<ApiResponse<WebApiResponse<List<UserResponseDto>>>> GetActive();
     }
 }

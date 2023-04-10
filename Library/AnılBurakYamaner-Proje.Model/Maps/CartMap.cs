@@ -15,7 +15,7 @@ namespace AnılBurakYamaner_Proje.Model.Maps
 
                 entity.HasExtended();
 
-                entity.Property(x => x.SessionId).HasMaxLength(255).IsRequired(true);
+                entity.Property(x => x.SessionId).IsRequired(false);
                
 
                 entity

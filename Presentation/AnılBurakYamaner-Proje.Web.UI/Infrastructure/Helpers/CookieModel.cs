@@ -12,4 +12,6 @@ namespace AnılBurakYamaner_Proje.Web.UI.Infrastructure.Helpers
         public string ImagePath { get; set; }
         public GetAcceessTokenDto AcceessToken { get; set; }
     }
+
 }
+

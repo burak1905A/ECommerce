@@ -10,7 +10,7 @@ namespace AnılBurakYamaner_Proje.Model.Context
         {
             var resolver = new DependencyResolver
             {
-                CurrentDirectory = Path.Combine(Directory.GetCurrentDirectory(), "../AnılBurakYamaner-Proje.API")
+                CurrentDirectory = Path.Combine(Directory.GetCurrentDirectory(), "../../Presentation/AnılBurakYamaner-Proje.API")
             };
             return resolver.ServiceProvider.GetService(typeof(DataContext)) as DataContext;
         }

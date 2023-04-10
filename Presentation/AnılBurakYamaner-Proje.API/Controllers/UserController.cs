@@ -48,7 +48,18 @@ namespace AnılBurakYamaner_Proje.API.Controllers
                 return new WebApiResponse<UserResponseDto>(false, "Error");
         }
 
-        [HttpPost]
+		[HttpGet("exists/{email}"), AllowAnonymous]
+		public async Task<ActionResult<WebApiResponse<bool>>> ExistsUser(string email)
+		{
+
+			var userResult =await _userRepository.Any(x => x.Email == email);
+			if (userResult != null)
+				return new WebApiResponse<bool>(true, "Success", userResult);
+			else
+				return new WebApiResponse<bool>(false, "Error");
+		}
+
+		[HttpPost, AllowAnonymous]
         public async Task<ActionResult<WebApiResponse<UserResponseDto>>> PostUser(UserRequestDto request)
         {
             User user = _mapper.Map<User>(request);

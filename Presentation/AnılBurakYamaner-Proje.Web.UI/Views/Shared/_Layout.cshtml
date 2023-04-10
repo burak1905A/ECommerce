@@ -1,17 +1,16 @@
 ﻿@using AnılBurakYamaner_Proje.Common.Dtos.Cart;
 @using AnılBurakYamaner_Proje.Web.UI.Infrastructure.Helpers;
 @using AnılBurakYamaner_Proje.Common.Dtos.Category;
+@using Microsoft.AspNetCore.Http;
 
 @inject ICartHelper _iCartHelper
+@inject IHttpContextAccessor _httpContextAccessor;
 
 @{
     var categories = _iCartHelper.GetCategories();
     var cart = new CartResponseDto();
-    if (User != null && User.Claims != null && User.Claims.Count() > 0)
-    {
-        var userId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
-        cart = _iCartHelper.GetActiveCart(userId);
-    }
+
+    cart = _iCartHelper.GetActiveCart(_httpContextAccessor, User);
 
     Layout = null;
 }
@@ -61,6 +60,7 @@
                             <a asp-controller="Home" asp-action="Index" title=""><i class="fa fa-user"></i>Anasayfa</a>
                             <a class="subscribe-btn" asp-controller="Cart" asp-action="Index" title=""><i class="fa fa-user"></i>Cart</a>
                             <a class="subscribe-btn" asp-controller="CheckOut" asp-action="Index" title=""><i class="fa fa-user"></i>CheckOut</a>
+                            
 
                         </ul>
                     </div>
@@ -91,6 +91,9 @@
                 @if (User.Claims.FirstOrDefault(x => x.Type == "IsAdmin")?.Value == "True")
                 {*@
                     <a class="subscribe-btn" asp-controller="Account" asp-action="Login" title=""><i class="fa fa-user"></i>User Giriş </a>
+                    <a class="subscribe-btn" asp-controller="Account" asp-action="Register" title=""><i class="fa fa-user"></i>Üye Ol</a>
+                  
+
 
                     <a class="subscribe-btn" asp-controller="Account" asp-action="Logout" title="">Çıkış Yap</a>
                     @*   <a class="toggle" href="#">
@@ -151,7 +154,7 @@
                                 <a asp-action="Index" asp-controller="Home">
                                     Cart -
                                     <span class="cart-amunt">$@cart.CartItems.Sum(x => x.Product.Price1 * x.Quantity)</span>
-                                    <a  asp-controller="Cart" asp-action="Index" title=""><i </a>
+                                    <a asp-controller="Cart" asp-action="Index" title=""><i </a>
                                     <i class="fa fa-shopping-cart"></i> <span class="product-count">@cart.CartItems.Count</span>
                                 </a>
                             </div>
@@ -162,159 +165,159 @@
                     </div>
                     <div class="row">
                         <div class="btn-group">
-  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Categories
-  </button>
-  <div class="dropdown-menu">
-      @foreach (var item in categories)
-        {
-            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-categoryId="@item.Id">@item.Name</a>
-        }
- 
-  </div>
-</div>
-                    </div>
-                </div>
-            </div> <!-- End site branding area -->
-
-            <div class="mainmenu-area">
-                <div class="container">
-                    <div class="row">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
+                            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Categories
                             </button>
-                        </div>
-                        <div class="navbar-collapse collapse">
-                            <ul class="nav navbar-nav">
-                                <li class="active"><a href="index.html">Home</a></li>
-                                <li><a href="shop.html">Shop page</a></li>
-                                <li><a href="single-product.html">Single product</a></li>
-                                <li><a href="cart.html">Cart</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
-                                <li><a href="#">Category</a></li>
-                                <li><a href="#">Others</a></li>
-                                <li><a href="#">Contact</a></li>
-                            </ul>
+                            <div class="dropdown-menu">
+                                @foreach (var item in categories)
+                            {
+                                <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-categoryId="@item.Id">@item.Name</a>
+                            }
+
                         </div>
                     </div>
                 </div>
-            </div> <!-- End mainmenu area -->
+            </div>
+        </div> <!-- End site branding area -->
 
-            <div class="slider-area">
-                <!-- Slider -->
-                <div class="block-slider block-slider4">
-                    <ul class="" id="bxslider-home4">
-                        <li>
-                            <img src="~/img/h4-slide.png" alt="Slide">
-                            <div class="caption-group">
-                                <h2 class="caption title">
-                                    iPhone <span class="primary">6 <strong>Plus</strong></span>
-                                </h2>
-                                <h4 class="caption subtitle">Dual SIM</h4>
-                                <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="~/img/h4-slide2.png" alt="Slide">
-                            <div class="caption-group">
-                                <h2 class="caption title">
-                                    by one, get one <span class="primary">50% <strong>off</strong></span>
-                                </h2>
-                                <h4 class="caption subtitle">school supplies & backpacks.*</h4>
-                                <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="~/img/h4-slide3.png" alt="Slide">
-                            <div class="caption-group">
-                                <h2 class="caption title">
-                                    Apple <span class="primary">Store <strong>Ipod</strong></span>
-                                </h2>
-                                <h4 class="caption subtitle">Select Item</h4>
-                                <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="~/img/h4-slide4.png" alt="Slide">
-                            <div class="caption-group">
-                                <h2 class="caption title">
-                                    Apple <span class="primary">Store <strong>Ipod</strong></span>
-                                </h2>
-                                <h4 class="caption subtitle">& Phone</h4>
-                                <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
-                            </div>
-                        </li>
-                    </ul>
+        <div class="mainmenu-area">
+            <div class="container">
+                <div class="row">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="index.html">Home</a></li>
+                            <li><a href="shop.html">Shop page</a></li>
+                            <li><a href="single-product.html">Single product</a></li>
+                            <li><a href="cart.html">Cart</a></li>
+                            <li><a href="checkout.html">Checkout</a></li>
+                            <li><a href="#">Category</a></li>
+                            <li><a href="#">Others</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <!-- ./Slider -->
-            </div> <!-- End slider area -->
-            <section class="main-content pb-0">
-                <div class="container">
-                    <div class="row">
-                        @* @RenderBody()*@
+            </div>
+        </div> <!-- End mainmenu area -->
+
+        <div class="slider-area">
+            <!-- Slider -->
+            <div class="block-slider block-slider4">
+                <ul class="" id="bxslider-home4">
+                    <li>
+                        <img src="~/img/h4-slide.png" alt="Slide">
+                        <div class="caption-group">
+                            <h2 class="caption title">
+                                iPhone <span class="primary">6 <strong>Plus</strong></span>
+                            </h2>
+                            <h4 class="caption subtitle">Dual SIM</h4>
+                            <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="~/img/h4-slide2.png" alt="Slide">
+                        <div class="caption-group">
+                            <h2 class="caption title">
+                                by one, get one <span class="primary">50% <strong>off</strong></span>
+                            </h2>
+                            <h4 class="caption subtitle">school supplies & backpacks.*</h4>
+                            <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="~/img/h4-slide3.png" alt="Slide">
+                        <div class="caption-group">
+                            <h2 class="caption title">
+                                Apple <span class="primary">Store <strong>Ipod</strong></span>
+                            </h2>
+                            <h4 class="caption subtitle">Select Item</h4>
+                            <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="~/img/h4-slide4.png" alt="Slide">
+                        <div class="caption-group">
+                            <h2 class="caption title">
+                                Apple <span class="primary">Store <strong>Ipod</strong></span>
+                            </h2>
+                            <h4 class="caption subtitle">& Phone</h4>
+                            <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- ./Slider -->
+        </div> <!-- End slider area -->
+        <section class="main-content pb-0">
+            <div class="container">
+                <div class="row">
+                    @* @RenderBody()*@
 
 
 
-                        @RenderBody()
-                        <div class="col-lg-4">
-                            <div class="sidebar">
-                                @* Partial View yerine Net Core ile birlikte gelen ViewComponent yapısını kullanıyoruz. *@
-                                @* @await Component.InvokeAsync("Category")
+                    @RenderBody()
+                    <div class="col-lg-4">
+                        <div class="sidebar">
+                            @* Partial View yerine Net Core ile birlikte gelen ViewComponent yapısını kullanıyoruz. *@
+                            @* @await Component.InvokeAsync("Category")
                             @await Component.InvokeAsync("Trending")*@
-                                @*<vc:category></vc:category>
+                            @*<vc:category></vc:category>
                             <vc:product></vc:product>
                             <vc:brand></vc:brand>*@
 
-                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
-            <div class="promo-area">
-                <div class="zigzag-bottom"></div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-6">
-                            <div class="single-promo promo1">
-                                <i class="fa fa-refresh"></i>
-                                <p>30 Days return</p>
-                            </div>
+            </div>
+        </section>
+        <div class="promo-area">
+            <div class="zigzag-bottom"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="single-promo promo1">
+                            <i class="fa fa-refresh"></i>
+                            <p>30 Days return</p>
                         </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="single-promo promo2">
-                                <i class="fa fa-truck"></i>
-                                <p>Free shipping</p>
-                            </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="single-promo promo2">
+                            <i class="fa fa-truck"></i>
+                            <p>Free shipping</p>
                         </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="single-promo promo3">
-                                <i class="fa fa-lock"></i>
-                                <p>Secure payments</p>
-                            </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="single-promo promo3">
+                            <i class="fa fa-lock"></i>
+                            <p>Secure payments</p>
                         </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="single-promo promo4">
-                                <i class="fa fa-gift"></i>
-                                <p>New products</p>
-                            </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="single-promo promo4">
+                            <i class="fa fa-gift"></i>
+                            <p>New products</p>
                         </div>
                     </div>
                 </div>
-            </div> <!-- End promo area -->
+            </div>
+        </div> <!-- End promo area -->
 
-            <div class="maincontent-area">
-                <div class="zigzag-bottom"></div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="latest-product">
-                                <h2 class="section-title">Latest Products</h2>
-                                <div class="product-carousel">
-                                    @*<div class="single-product">
+        <div class="maincontent-area">
+            <div class="zigzag-bottom"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="latest-product">
+                            <h2 class="section-title">Latest Products</h2>
+                            <div class="product-carousel">
+                                @*<div class="single-product">
                                 <div class="product-f-image">
                                 <img src="~/img/product-1.jpg" alt="">
                                 <div class="product-hover">
@@ -403,41 +406,41 @@
                                 <ins>$400.00</ins>
                                 </div>
                                 </div>*@
-                                    @*<vc:product></vc:product>*@
-                                </div>
+                                @*<vc:product></vc:product>*@
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> <!-- End main content area -->
+            </div>
+        </div> <!-- End main content area -->
 
-            <div class="brands-area">
-                <div class="zigzag-bottom"></div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="brand-wrapper">
-                                <div class="brand-list">
-                                    <img src="~/img/brand1.png" alt="">
-                                    <img src="~/img/brand2.png" alt="">
-                                    <img src="~/img/brand3.png" alt="">
-                                    <img src="~/img/brand4.png" alt="">
-                                    <img src="~/img/brand5.png" alt="">
-                                    <img src="~/img/brand6.png" alt="">
-                                    <img src="~/img/brand1.png" alt="">
-                                    <img src="~/img/brand2.png" alt="">
-                                    <img src="~/img/brand2.png" alt="">
-                                    <img src="~/img/indir (2).jpeg" alt="">
-                                </div>
+        <div class="brands-area">
+            <div class="zigzag-bottom"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="brand-wrapper">
+                            <div class="brand-list">
+                                <img src="~/img/brand1.png" alt="">
+                                <img src="~/img/brand2.png" alt="">
+                                <img src="~/img/brand3.png" alt="">
+                                <img src="~/img/brand4.png" alt="">
+                                <img src="~/img/brand5.png" alt="">
+                                <img src="~/img/brand6.png" alt="">
+                                <img src="~/img/brand1.png" alt="">
+                                <img src="~/img/brand2.png" alt="">
+                                <img src="~/img/brand2.png" alt="">
+                                <img src="~/img/indir (2).jpeg" alt="">
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> <!-- End brands area -->
+            </div>
+        </div> <!-- End brands area -->
 
 
-            <div class="product-widget-area">
-                @*<div class="zigzag-bottom"></div>
+        <div class="product-widget-area">
+            @*<div class="zigzag-bottom"></div>
             <div class="container">
             <div class="row">
             <div class="col-md-4">
@@ -586,126 +589,126 @@
             </div>
             </div>
             </div>*@
-                @* @RenderBody()*@
-            </div> <!-- End product widget area -->
+            @* @RenderBody()*@
+        </div> <!-- End product widget area -->
 
-            <div class="footer-top-area">
-                <div class="zigzag-bottom"></div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-6">
-                            <div class="footer-about-us">
-                                <h2>u<span>Stora</span></h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
-                                <div class="footer-social">
-                                    <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                                    <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                                    <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
-                                    <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="footer-menu">
-                                <h2 class="footer-wid-title">User Navigation </h2>
-                                <ul>
-                                    <li><a href="#">My account</a></li>
-                                    <li><a href="#">Order history</a></li>
-                                    <li><a href="#">Wishlist</a></li>
-                                    <li><a href="#">Vendor contact</a></li>
-                                    <li><a href="#">Front page</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="footer-menu">
-                                <h2 class="footer-wid-title">Categories</h2>
-                                <ul>
-                                    <vc:category></vc:category>
-
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="footer-newsletter">
-                                <h2 class="footer-wid-title">Newsletter</h2>
-                                <p>Sign up to our newsletter and get exclusive deals you wont find anywhere else straight to your inbox!</p>
-                                <div class="newsletter-form">
-                                    <form action="#">
-                                        <input type="email" placeholder="Type your email">
-                                        <input type="submit" value="Subscribe">
-                                    </form>
-                                </div>
+        <div class="footer-top-area">
+            <div class="zigzag-bottom"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="footer-about-us">
+                            <h2>u<span>Stora</span></h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
+                            <div class="footer-social">
+                                <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                                <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                                <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                                <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div> <!-- End footer top area -->
 
-            <div class="footer-bottom-area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="copyright">
-                                <p>&copy; 2015 uCommerce. All Rights Reserved. <a href="http://www.freshdesignweb.com" target="_blank">freshDesignweb.com</a></p>
-                            </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="footer-menu">
+                            <h2 class="footer-wid-title">User Navigation </h2>
+                            <ul>
+                                <li><a href="#">My account</a></li>
+                                <li><a href="#">Order history</a></li>
+                                <li><a href="#">Wishlist</a></li>
+                                <li><a href="#">Vendor contact</a></li>
+                                <li><a href="#">Front page</a></li>
+                            </ul>
                         </div>
+                    </div>
 
-                        <div class="col-md-4">
-                            <div class="footer-card-icon">
-                                <i class="fa fa-cc-discover"></i>
-                                <i class="fa fa-cc-mastercard"></i>
-                                <i class="fa fa-cc-paypal"></i>
-                                <i class="fa fa-cc-visa"></i>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="footer-menu">
+                            <h2 class="footer-wid-title">Categories</h2>
+                            <ul>
+                                <vc:category></vc:category>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+                        <div class="footer-newsletter">
+                            <h2 class="footer-wid-title">Newsletter</h2>
+                            <p>Sign up to our newsletter and get exclusive deals you wont find anywhere else straight to your inbox!</p>
+                            <div class="newsletter-form">
+                                <form action="#">
+                                    <input type="email" placeholder="Type your email">
+                                    <input type="submit" value="Subscribe">
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <section class="main-content pb-0">
-                <div class="container">
-                    <div class="row">
+        </div> <!-- End footer top area -->
 
-                        <div class="col-lg-8">
-                            <div class="sidebar">
-                                @* Partial View yerine Net Core ile birlikte gelen ViewComponent yapısını kullanıyoruz. *@
-                                @* @await Component.InvokeAsync("Category")
-                            @await Component.InvokeAsync("Trending")*@
-                                @*<vc:category></vc:category>
-                            <vc:product></vc:product>
-                            <vc:brand></vc:brand>*@
-                            </div>
+        <div class="footer-bottom-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="copyright">
+                            <p>&copy; 2015 uCommerce. All Rights Reserved. <a href="http://www.freshdesignweb.com" target="_blank">freshDesignweb.com</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="footer-card-icon">
+                            <i class="fa fa-cc-discover"></i>
+                            <i class="fa fa-cc-mastercard"></i>
+                            <i class="fa fa-cc-paypal"></i>
+                            <i class="fa fa-cc-visa"></i>
                         </div>
                     </div>
                 </div>
-            </section>
-
-
+            </div>
         </div>
+        <section class="main-content pb-0">
+            <div class="container">
+                <div class="row">
 
-        <script src="https://code.jquery.com/jquery.min.js"></script>
+                    <div class="col-lg-8">
+                        <div class="sidebar">
+                            @* Partial View yerine Net Core ile birlikte gelen ViewComponent yapısını kullanıyoruz. *@
+                            @* @await Component.InvokeAsync("Category")
+                            @await Component.InvokeAsync("Trending")*@
+                            @*<vc:category></vc:category>
+                            <vc:product></vc:product>
+                            <vc:brand></vc:brand>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <!-- Bootstrap JS form CDN -->
-        <!-- jQuery sticky menu -->
-        <script src="~/js/owl.carousel.min.js"></script>
-        <script src="~/js/jquery.sticky.js"></script>
 
-        <!-- jQuery easing -->
-        <script src="~/js/jquery.easing.1.3.min.js"></script>
+    </div>
 
-        <!-- Main Script -->
-        <script src="~/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
 
-        <!-- Slider -->
-        <script type="text/javascript" src="~/js/bxslider.min.js"></script>
-        <script type="text/javascript" src="~/js/script.slider.js"></script>
-        @*<script src="~/blog/js/jquery.min.js"></script>
+    <!-- Bootstrap JS form CDN -->
+    <!-- jQuery sticky menu -->
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+
+    <!-- jQuery easing -->
+    <script src="~/js/jquery.easing.1.3.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="~/js/main.js"></script>
+
+    <!-- Slider -->
+    <script type="text/javascript" src="~/js/bxslider.min.js"></script>
+    <script type="text/javascript" src="~/js/script.slider.js"></script>
+    @*<script src="~/blog/js/jquery.min.js"></script>
     <script src="~/blog/js/popper.js"></script>
     <script src="~/blog/js/bootstrap.min.js"></script>
     <script src="~/blog/js/lib/slick/slick.js"></script>
     <script src="~/blog/js/script.js"></script>*@
-    </body>
-    </html>
+</body>
+</html>

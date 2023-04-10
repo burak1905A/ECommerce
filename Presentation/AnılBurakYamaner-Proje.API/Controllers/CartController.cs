@@ -26,7 +26,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<ActionResult<WebApiResponse<List<CartResponseDto>>>> GetCarts()
         {
 
@@ -38,18 +38,30 @@ namespace AnılBurakYamaner_Proje.API.Controllers
         }
 
 
-        [HttpGet("query/{userId}")]
+        [HttpGet("query/{userId}"), AllowAnonymous]
         public async Task<ActionResult<WebApiResponse<List<CartResponseDto>>>> GetCartsByQuery(Guid userId)
         {
 
-            var cartResult = _mapper.Map<List<CartResponseDto>>(await _cartRepository.GetDefault(x => x.UserId == userId && x.Locked != true).ToListAsync());
+            var cartResult = _mapper.Map<List<CartResponseDto>>(await _cartRepository.GetDefault(x => x.UserId == userId && x.Locked != true, x => x.CartItems).ToListAsync());
             if (cartResult.Count > 0)
                 return new WebApiResponse<List<CartResponseDto>>(true, "Success", cartResult);
             else
                 return new WebApiResponse<List<CartResponseDto>>(false, "Error");
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("query/session/{sessionId}"), AllowAnonymous]
+        public async Task<ActionResult<WebApiResponse<List<CartResponseDto>>>> GetCartsBySession(Guid sessionId)
+        {
+
+            var cartResult = _mapper.Map<List<CartResponseDto>>(await _cartRepository.GetDefault(x => x.SessionId == sessionId && x.Locked != true, x=> x.CartItems).ToListAsync());
+            if (cartResult.Count > 0)
+                return new WebApiResponse<List<CartResponseDto>>(true, "Success", cartResult);
+            else
+                return new WebApiResponse<List<CartResponseDto>>(false, "Error");
+        }
+
+
+        [HttpGet("{Id}"), AllowAnonymous]
         public async Task<ActionResult<WebApiResponse<CartResponseDto>>> GetCart(Guid Id)
         {
 
@@ -60,7 +72,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
                 return new WebApiResponse<CartResponseDto>(false, "Error");
         }
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public async Task<ActionResult<WebApiResponse<CartResponseDto>>> PostCart(CartRequestDto request)
         {
             Cart cart = _mapper.Map<Cart>(request);
@@ -73,7 +85,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
             return new WebApiResponse<CartResponseDto>(false, "Error");
         }
 
-        [HttpPut("{Id}")]
+        [HttpPut("{Id}"), AllowAnonymous]
         public async Task<ActionResult<WebApiResponse<CartResponseDto>>> PutCart(Guid Id,
            CartRequestDto request)
         {
@@ -102,7 +114,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
             }
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("{Id}"), AllowAnonymous]
         public async Task<ActionResult<WebApiResponse<CartResponseDto>>> DeleteCart(Guid Id)
         {
             var cart = await _cartRepository.GetById(Id);
@@ -117,7 +129,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
                 return new WebApiResponse<CartResponseDto>(false, "Error");
         }
 
-        [HttpGet("activate/{Id}")]
+        [HttpGet("activate/{Id}"), AllowAnonymous]
         public async Task<ActionResult<WebApiResponse<bool>>> ActivateCart(Guid Id)
         {
             bool result = await _cartRepository.Activate(Id);

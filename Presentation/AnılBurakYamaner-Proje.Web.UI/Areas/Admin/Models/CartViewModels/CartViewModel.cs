@@ -14,7 +14,7 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.CartViewModels
         }
         public Guid Id { get; set; }
         public Status Status { get; set; }
-        public string SessionId { get; set; }
+        public Guid? SessionId { get; set; }
         public bool? Locked { get; set; }
 
         public Guid MemberId { get; set; }

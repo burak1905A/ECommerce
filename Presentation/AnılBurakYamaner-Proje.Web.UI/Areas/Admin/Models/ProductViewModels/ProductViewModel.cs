@@ -47,6 +47,8 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductViewModels
         public string ProductDetail { get; set; }
         public int? ProductPrice { get; set; }
 
+        public int Quantity { get; set; } = 1;
+
         public Guid CategoryId { get; set; }
         public CategoryViewModel Category { get; set; }
 

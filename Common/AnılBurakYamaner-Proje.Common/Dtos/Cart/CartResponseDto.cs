@@ -14,10 +14,10 @@ namespace AnılBurakYamaner_Proje.Common.Dtos.Cart
         {
             CartItems = new HashSet<CartItemResponseDto>();
         }
-        public string SessionId { get; set; }
+        public Guid? SessionId { get; set; }
         public bool? Locked { get; set; }
 
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
         public UserResponseDto User { get; set; }
 
         public ICollection<CartItemResponseDto> CartItems { get; set; }

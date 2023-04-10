@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AnılBurakYamaner_Proje.Web.UI.APIs
 {
-    [Headers("Authorization: Bearer", "Content-Type: application/json")]
+    //[Headers("Authorization: Bearer", "Content-Type: application/json")]
     public interface ICartApi
     {
         [Get("/cart")]
@@ -33,5 +33,8 @@ namespace AnılBurakYamaner_Proje.Web.UI.APIs
 
         [Get("/cart/getactive")]
         Task<ApiResponse<WebApiResponse<List<CartResponseDto>>>> GetActive();
+
+        [Get("/cart/query/session/{sessionId}")]
+        Task<ApiResponse<WebApiResponse<List<CartResponseDto>>>> GetCartsBySession(Guid? sessionId);
     }
 }

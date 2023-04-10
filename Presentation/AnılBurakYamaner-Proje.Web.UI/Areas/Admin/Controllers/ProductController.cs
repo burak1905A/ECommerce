@@ -59,6 +59,8 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Insert()
         {
+            if (User.Claims.FirstOrDefault(x => x.Type == "IsAdmin")?.Value != "True")
+                return Redirect("/Home/Index");
             List<CategoryViewModel> list = new List<CategoryViewModel>();
             var listResult = await _categoryApi.List();
             if (listResult.IsSuccessStatusCode &&
@@ -126,6 +128,8 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
      
         public async Task<IActionResult> Update(Guid id)
         {
+            if (User.Claims.FirstOrDefault(x => x.Type == "IsAdmin")?.Value != "True")
+                return Redirect("/Home/Index");
             List<CategoryViewModel> list = new List<CategoryViewModel>();
             var listResult = await _categoryApi.List();
             if (listResult.IsSuccessStatusCode &&

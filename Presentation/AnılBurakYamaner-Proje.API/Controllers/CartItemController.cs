@@ -27,7 +27,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
             _mapper = mapper;
         }
         
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<ActionResult<WebApiResponse<List<CartItemResponseDto>>>> GetCartItems()
         {
 
@@ -38,7 +38,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
                 return new WebApiResponse<List<CartItemResponseDto>>(false, "Error");
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), AllowAnonymous]
         public async Task<ActionResult<WebApiResponse<CartItemResponseDto>>> GetCartItem(Guid id)
         {
 
@@ -49,7 +49,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
                 return new WebApiResponse<CartItemResponseDto>(false, "Error");
         }
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public async Task<ActionResult<WebApiResponse<CartItemResponseDto>>> PostCartItem(CartItemRequestDto request)
         {
             CartItem cartItem = _mapper.Map<CartItem>(request);
@@ -62,7 +62,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
             return new WebApiResponse<CartItemResponseDto>(false, "Error");
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), AllowAnonymous]
         public async Task<ActionResult<WebApiResponse<CartItemResponseDto>>> PutCartItem(Guid id,
            CartItemRequestDto request)
         {
@@ -92,7 +92,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
                 throw ex;
             }
         }
-            [HttpDelete("{id}")]
+            [HttpDelete("{id}"), AllowAnonymous]
             public async Task<ActionResult<WebApiResponse<CartItemResponseDto>>> DeleteCartItem(Guid id)
             {
                 var cartItem = await _cartItemRepository.GetById(id);
@@ -107,7 +107,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
                     return new WebApiResponse<CartItemResponseDto>(false, "Error");
             }
 
-            [HttpGet("activate/{id}")]
+            [HttpGet("activate/{id}"), AllowAnonymous]
             public async Task<ActionResult<WebApiResponse<bool>>> ActivateCartItem(Guid id)
             {
                 bool result = await _cartItemRepository.Activate(id);
@@ -117,7 +117,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
                     return new WebApiResponse<bool>(false, "Error");
             }
 
-        [HttpGet("query/{cartId}")]
+        [HttpGet("query/{cartId}"), AllowAnonymous]
         public async Task<ActionResult<WebApiResponse<List<CartItemResponseDto>>>> GetCartsByQuery(Guid cartId)
         {
 

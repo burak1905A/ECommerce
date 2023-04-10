@@ -1,15 +1,13 @@
 ﻿@using AnılBurakYamaner_Proje.Common.Dtos.Cart;
 @using AnılBurakYamaner_Proje.Web.UI.Infrastructure.Helpers;
+@using Microsoft.AspNetCore.Http;
 @model CartViewModel
 @inject ICartHelper _iCartHelper
+@inject IHttpContextAccessor _httpContextAccessor;
 @{
     var cart = new CartResponseDto();
-    if (User != null && User.Claims != null && User.Claims.Count() > 0)
-    {
-        var userId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
-        cart = _iCartHelper.GetActiveCart(userId);
-    }
 
+    cart = _iCartHelper.GetActiveCart(_httpContextAccessor, User);
 
     Layout = null;
 }
@@ -59,9 +57,9 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                              <a asp-controller="Home" asp-action="Index" title=""><i class="fa fa-user"></i>Anasayfa</a>
-                        
-                            
+                            <a asp-controller="Home" asp-action="Index" title=""><i class="fa fa-user"></i>Anasayfa</a>
+
+
                             <a class="subscribe-btn" asp-controller="CheckOut" asp-action="Index" title=""><i class="fa fa-user"></i>CheckOut</a>
                         </ul>
                     </div>
@@ -99,14 +97,15 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./" src ="~/img/logo.png"></a></h1>
+                        <h1><a href="./" src="~/img/logo.png"></a></h1>
                     </div>
                 </div>
 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a asp-action="Index" asp-controller="Cart">Cart - 
-                            <span class="cart-amunt">$@cart.CartItems.Sum(x => x.Product.Price1 * x.Quantity)</span> 
+                        <a asp-action="Index" asp-controller="Cart">
+                            Cart -
+                            <span class="cart-amunt">$@cart.CartItems.Sum(x => x.Product.Price1 * x.Quantity)</span>
                             <i class="fa fa-shopping-cart"></i> <span class="product-count">@cart.CartItems.Count</span>
                         </a>
                     </div>
@@ -127,7 +126,6 @@
                     </button>
                 </div>
                 <div class="navbar-collapse collapse">
-                  
                 </div>
             </div>
         </div>
@@ -167,7 +165,7 @@
                         <h2 class="sidebar-title">Recent Posts</h2>
                         <ul>
                             <li><a href="#">Sony Smart TV - 2015</a></li>
-                           
+
                         </ul>
                     </div>
                 </div>
@@ -227,12 +225,12 @@
                                         <tr>
                                             <td class="actions" colspan="6">
                                                 <div class="coupon">
-                                               
+
                                                     <input type="text" placeholder="Coupon code" value="" id="coupon_code" class="input-text" name="coupon_code">
-                                                    
+
                                                 </div>
-                                               
-                                                 <a class="subscribe-btn" asp-controller="CheckOut" asp-action="Index" title=""><i class="fa fa-user"></i>CheckOut</a>
+
+                                                <a class="subscribe-btn" asp-controller="CheckOut" asp-action="Index" title=""><i class="fa fa-user"></i>Siparişi Tamamla</a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -265,7 +263,7 @@
                                 </div>
 
 
-                                
+
 
 
                             </div>
@@ -312,7 +310,7 @@
                         <h2 class="footer-wid-title">Categories</h2>
                         <ul>
                             <li><a href="#">Mobile Phone</a></li>
-                           
+
                         </ul>
                     </div>
                 </div>

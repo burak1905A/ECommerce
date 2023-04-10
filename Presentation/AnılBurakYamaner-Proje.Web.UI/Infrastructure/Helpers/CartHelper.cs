@@ -1,11 +1,17 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.Cart;
 using AnılBurakYamaner_Proje.Common.Dtos.CartItem;
 using AnılBurakYamaner_Proje.Common.Dtos.Category;
+using AnılBurakYamaner_Proje.Common.Extensions;
+using AnılBurakYamaner_Proje.Common.Models;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
 using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductViewModels;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Refit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Infrastructure.Helpers
 {
@@ -57,10 +63,28 @@ namespace AnılBurakYamaner_Proje.Web.UI.Infrastructure.Helpers
         public void RemoveCart(Guid id) => CartList.Remove(CartList.Find(x => x.Id == id));
         #endregion
 
-        public CartResponseDto GetActiveCart(Guid userId)
+        public CartResponseDto GetActiveCart(IHttpContextAccessor _httpContextAccessor, ClaimsPrincipal User)
         {
             var cart = new CartResponseDto();
-            var activeCart = _cartApi.GetCartsByQuery(userId).Result;
+            ApiResponse<WebApiResponse<List<CartResponseDto>>> activeCart = new ApiResponse<WebApiResponse<List<CartResponseDto>>>(new System.Net.Http.HttpResponseMessage(System.Net.HttpStatusCode.NotFound), null, null) { };
+            if (User != null && User.Claims != null && User.Claims.Count() > 0)
+            {
+                var userId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
+
+                activeCart = _cartApi.GetCartsByQuery(userId).Result;
+            }
+            else
+            {
+
+                if (_httpContextAccessor.HttpContext.Request.Cookies.ContainsKey("AnılBurakYamaner-ProjeCart"))
+                {
+                    var cookieStr = _httpContextAccessor.HttpContext.Request.Cookies["AnılBurakYamaner-ProjeCart"].Decrypt();
+                    var sessionId = JsonConvert.DeserializeObject<Guid>(cookieStr);
+                    activeCart = _cartApi.GetCartsBySession(sessionId).Result;
+
+                }
+
+            }
             if (activeCart.IsSuccessStatusCode && activeCart.Content.IsSuccess)
             {
                 var cartItems = new List<CartItemResponseDto>();
@@ -78,6 +102,8 @@ namespace AnılBurakYamaner_Proje.Web.UI.Infrastructure.Helpers
                 }
                 cart.CartItems = cartItems;
             }
+
+
             return cart;
         }
 
@@ -87,9 +113,9 @@ namespace AnılBurakYamaner_Proje.Web.UI.Infrastructure.Helpers
             var activeCart = _categoryApi.List().Result;
             if (activeCart.IsSuccessStatusCode && activeCart.Content.IsSuccess)
             {
-               
-                    response = activeCart.Content.ResultData;
-                   
+
+                response = activeCart.Content.ResultData;
+
             }
             return response;
         }
