@@ -1,6 +1,6 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.ProductImage;
 using AnılBurakYamaner_Proje.Common.Extensions;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductImageViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.ProductImageViewModels;
 using AutoMapper;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Infrastructure.Mappers

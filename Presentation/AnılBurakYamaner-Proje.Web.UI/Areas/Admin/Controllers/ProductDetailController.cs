@@ -1,18 +1,16 @@
-﻿using AnılBurakYamaner_Proje.Common.Dtos.ProductImage;
+﻿using AnılBurakYamaner_Proje.Common.Dtos.ProductDetail;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductImageViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.ProductDetailViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System;
-using Microsoft.AspNetCore.Authorization;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductDetailViewModels;
+using System.Collections.Generic;
 using System.Linq;
-using AnılBurakYamaner_Proje.Common.Dtos.ProductDetail;
+using System.Threading.Tasks;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
 {

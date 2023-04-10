@@ -1,6 +1,6 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.Town;
 using AnılBurakYamaner_Proje.Common.Extensions;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.TownViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.TownViewModels;
 using AutoMapper;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Infrastructure.Mappers

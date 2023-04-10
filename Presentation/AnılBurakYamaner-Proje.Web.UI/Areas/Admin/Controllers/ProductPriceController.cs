@@ -1,7 +1,7 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.ProductPrice;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductPriceViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.ProductPriceViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;

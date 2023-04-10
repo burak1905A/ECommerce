@@ -1,15 +1,13 @@
-﻿using AnılBurakYamaner_Proje.Common.Dtos.Category;
+﻿using AnılBurakYamaner_Proje.Common.Dtos.Country;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.CategoryViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.CountryViewModels;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
 using Microsoft.AspNetCore.Authorization;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.CountryViewModels;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using AnılBurakYamaner_Proje.Common.Dtos.Country;
+using System.Threading.Tasks;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
 {

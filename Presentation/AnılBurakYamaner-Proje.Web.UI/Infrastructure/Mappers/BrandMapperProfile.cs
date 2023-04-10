@@ -1,6 +1,6 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.Brand;
 using AnılBurakYamaner_Proje.Common.Extensions;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.BrandViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.BrandViewModels;
 using AutoMapper;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Infrastructure.Mappers

@@ -1,6 +1,6 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.Member;
 using AnılBurakYamaner_Proje.Common.Extensions;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.MemberViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.MemberViewModels;
 using AutoMapper;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Infrastructure.Mappers

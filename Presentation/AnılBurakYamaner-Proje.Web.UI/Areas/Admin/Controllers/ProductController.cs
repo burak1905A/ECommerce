@@ -1,10 +1,9 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.Product;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.BrandViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.CategoryViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.CurrencyViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductViewModels;
 using AnılBurakYamaner_Proje.Web.UI.Infrastructure.Helpers;
+using AnılBurakYamaner_Proje.Web.UI.Models.BrandViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.CategoryViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;

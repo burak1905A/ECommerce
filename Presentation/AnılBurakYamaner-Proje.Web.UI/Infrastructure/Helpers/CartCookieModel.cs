@@ -1,4 +1,4 @@
-﻿using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductViewModels;
+﻿using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
 using System.Collections.Generic;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Infrastructure.Helpers

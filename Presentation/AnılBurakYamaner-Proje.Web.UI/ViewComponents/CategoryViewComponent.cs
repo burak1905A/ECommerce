@@ -1,5 +1,5 @@
 ﻿using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.CategoryViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.CategoryViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

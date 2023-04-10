@@ -1,7 +1,7 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.ProductImage;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductImageViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.ProductImageViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;

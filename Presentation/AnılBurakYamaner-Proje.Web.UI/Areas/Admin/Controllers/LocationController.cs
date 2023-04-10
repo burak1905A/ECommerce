@@ -1,7 +1,7 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.Location;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.CountryViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.LocationViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.CountryViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Models.LocationViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;

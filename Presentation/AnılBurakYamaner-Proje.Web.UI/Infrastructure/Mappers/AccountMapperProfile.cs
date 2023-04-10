@@ -1,7 +1,7 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.Login;
 using AnılBurakYamaner_Proje.Common.Dtos.User;
 using AnılBurakYamaner_Proje.Common.Extensions;
-using AnılBurakYamaner_Proje.Web.UI.Models.AccountViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.AccountViewModels;
 using AutoMapper;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Infrastructure.Mappers

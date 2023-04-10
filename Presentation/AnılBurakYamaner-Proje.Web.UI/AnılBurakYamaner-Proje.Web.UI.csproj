@@ -19,12 +19,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\User\Data\" />
+    <Folder Include="Controllers\" />
     <Folder Include="wwwroot\admin\assets\js\plugins\plugins-related\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Account\Register.cshtml">
+    <Content Update="Areas\Admin\Views\Account\Register.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
