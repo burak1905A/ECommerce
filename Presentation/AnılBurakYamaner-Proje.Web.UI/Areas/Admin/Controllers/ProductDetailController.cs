@@ -1,7 +1,7 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.ProductDetail;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Models.ProductDetailViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductDetailViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -12,13 +12,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
 {
-    [Area("Admin"), Authorize]
+    [Area("Admin"), Authorize(AuthenticationSchemes = "AdminScheme")]
     public class ProductDetailController : Controller
     {
         private readonly IProductDetailApi _productDetailApi;
-        private readonly IProductApi _productApi;
+        private readonly IAdminProductApi _productApi;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _env;
 
@@ -27,7 +28,7 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
             IProductDetailApi productDetailApi,
             IMapper mapper,
             IWebHostEnvironment env,
-            IProductApi productApi)
+            IAdminProductApi productApi)
 
         {
             _productDetailApi = productDetailApi;

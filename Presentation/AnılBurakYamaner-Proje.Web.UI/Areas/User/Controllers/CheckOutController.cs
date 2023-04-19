@@ -4,8 +4,8 @@ using AnılBurakYamaner_Proje.Common.Dtos.OrderItem;
 using AnılBurakYamaner_Proje.Common.Dtos.ShippingAddress;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
 using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.CartItemViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.ProductViewModels;
 using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.ShippingAddressViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Areas.User.Controllers
 {
+    [Area("User")]
     public class CheckOutController : Controller
     {
         private readonly IOrderApi _orderApi;
@@ -35,128 +36,139 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.User.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var userId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
-
-            var existingCart = await _cartApi.GetCartsByQuery(userId);
-            var cartItems = new List<CartItemViewModel>();
-
-            if (existingCart.IsSuccessStatusCode && existingCart.Content.IsSuccess)
+            if (User != null && User.Claims != null && User.Claims.Count() > 0)
             {
-                var cart = existingCart.Content.ResultData.FirstOrDefault();
-                var cartItemResult = await _cartItemApi.GetCartItemQuery(cart.Id);
-                if (cartItemResult.IsSuccessStatusCode && cartItemResult.Content.IsSuccess)
+                var userId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
+
+                var existingCart = await _cartApi.GetCartsByQuery(userId);
+                var cartItems = new List<CartItemViewModel>();
+
+                if (existingCart.IsSuccessStatusCode && existingCart.Content.IsSuccess)
                 {
-                    cartItems = cartItemResult.Content.ResultData.Select(x => new CartItemViewModel
+                    var cart = existingCart.Content.ResultData.FirstOrDefault();
+                    var cartItemResult = await _cartItemApi.GetCartItemQuery(cart.Id);
+                    if (cartItemResult.IsSuccessStatusCode && cartItemResult.Content.IsSuccess)
                     {
-                        Id = x.Id,
-                        ProductId = x.ProductId,
-                        Quantity = x.Quantity,
-                        Product = new ProductViewModel
+                        cartItems = cartItemResult.Content.ResultData.Select(x => new CartItemViewModel
                         {
-                            Name = x.Product.Name,
-                            Barcode = x.Product.Barcode,
-                            FullName = x.Product.FullName,
-                            Price1 = x.Product.Price1,
-                        }
-                    }).ToList();
+                            Id = x.Id,
+                            ProductId = x.ProductId,
+                            Quantity = x.Quantity,
+                            Product = new ProductViewModel
+                            {
+                                Name = x.Product.Name,
+                                Barcode = x.Product.Barcode,
+                                FullName = x.Product.FullName,
+                                Price1 = x.Product.Price1,
+                            }
+                        }).ToList();
+                    }
                 }
-            }
-            CheckOutViewModel model = new CheckOutViewModel
-            {
+                CheckOutViewModel model = new CheckOutViewModel
+                {
 
-                CartItems = cartItems
-            };
-            return View(model);
+                    CartItems = cartItems
+                };
+                return View(model);
+            }
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CheckOutViewModel model)
         {
-            var userId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
 
-            var existingCart = await _cartApi.GetCartsByQuery(userId);
-            if (existingCart.IsSuccessStatusCode && existingCart.Content.IsSuccess)
+            if (User != null && User.Claims != null && User.Claims.Count() > 0)
             {
-                var cart = existingCart.Content.ResultData.FirstOrDefault();
-                var cartItemResult = await _cartItemApi.GetCartItemQuery(cart.Id);
-                if (cartItemResult.IsSuccessStatusCode && cartItemResult.Content.IsSuccess)
+                var userId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
+
+
+                var existingCart = await _cartApi.GetCartsByQuery(userId);
+                if (existingCart.IsSuccessStatusCode && existingCart.Content.IsSuccess)
                 {
-                    var cartItems = cartItemResult.Content.ResultData.Select(x => new CartItemViewModel
+                    var cart = existingCart.Content.ResultData.FirstOrDefault();
+                    var cartItemResult = await _cartItemApi.GetCartItemQuery(cart.Id);
+                    if (cartItemResult.IsSuccessStatusCode && cartItemResult.Content.IsSuccess)
                     {
-                        Id = x.Id,
-                        ProductId = x.ProductId,
-                        Quantity = x.Quantity,
-                        Product = new ProductViewModel
+                        var cartItems = cartItemResult.Content.ResultData.Select(x => new CartItemViewModel
                         {
-                            Name = x.Product.Name,
-                            Barcode = x.Product.Barcode,
-                            FullName = x.Product.FullName,
-                            Price1 = x.Product.Price1,
-                        }
-                    }).ToList();
-
-                    ShippingAddressRequestDto shipRequest = new ShippingAddressRequestDto
-                    {
-                        Address = model.Address,
-                        Country = model.Country,
-                        FirstName = model.FirstName,
-                        SurName = model.SurName,
-                        Location = model.Location,
-                        SubLocation = model.SubLocation,
-                    };
-                    var shippAddrResult = await _shippingAddressApi.Post(shipRequest);
-                    if (shippAddrResult.IsSuccessStatusCode && shippAddrResult.Content.IsSuccess)
-                    {
-                        var newshippAddrResult = shippAddrResult.Content.ResultData;
-
-                        var orderItems = new List<OrderItemRequestDto>();
-                        foreach (var item in cartItems)
-                        {
-                            orderItems.Add(new OrderItemRequestDto
+                            Id = x.Id,
+                            ProductId = x.ProductId,
+                            Quantity = x.Quantity,
+                            Product = new ProductViewModel
                             {
-                                ProductBarcode = item.Product.Barcode,
-                                ProductName = item.Product.Name,
-                                ProductPrice = "",
-                                ProductSku = "",
-                                ProductId = item.ProductId
-                            });
-                        }
-                        OrderRequestDto orderRequest = new OrderRequestDto
+                                Name = x.Product.Name,
+                                Barcode = x.Product.Barcode,
+                                FullName = x.Product.FullName,
+                                Price1 = x.Product.Price1,
+                            }
+                        }).ToList();
+
+                        ShippingAddressRequestDto shipRequest = new ShippingAddressRequestDto
                         {
-                            Amount = cartItems.Sum(x => x.Product.Price1),
-                            Currency = "TL",
-                            UserId = userId,
-                            ShippingAddressId = newshippAddrResult.Id,
-                            OrderItems = orderItems,
-                            CustomerFirstname = model.FirstName,
-                            CustomerSurname = model.SurName,
-                            CustomerEmail = ""
+                            Address = model.Address,
+                            Country = model.Country,
+                            FirstName = model.FirstName,
+                            SurName = model.SurName,
+                            Location = model.Location,
+                            SubLocation = model.SubLocation,
                         };
-
-
-                        var orderResult = await _orderApi.Post(orderRequest);
-                        if (orderResult.IsSuccessStatusCode && orderResult.Content.IsSuccess)
+                        var shippAddrResult = await _shippingAddressApi.Post(shipRequest);
+                        if (shippAddrResult.IsSuccessStatusCode && shippAddrResult.Content.IsSuccess)
                         {
-                            var neworderResult = orderResult.Content.ResultData;
-                            cart.Locked = true;
-                            CartRequestDto cartRequest = new CartRequestDto
+                            var newshippAddrResult = shippAddrResult.Content.ResultData;
+
+                            var orderItems = new List<OrderItemRequestDto>();
+                            foreach (var item in cartItems)
                             {
-                                Id = cart.Id,
-                                Locked = cart.Locked,
-                                SessionId = cart.SessionId,
-                                Status = cart.Status,
-                                UserId = cart.UserId
+                                orderItems.Add(new OrderItemRequestDto
+                                {
+                                    ProductBarcode = item.Product.Barcode,
+                                    ProductName = item.Product.Name,
+                                    ProductPrice = "",
+                                    ProductSku = "",
+                                    ProductId = item.ProductId
+                                });
+                            }
+                            OrderRequestDto orderRequest = new OrderRequestDto
+                            {
+                                Amount = cartItems.Sum(x => x.Product.Price1),
+                                Currency = "TL",
+                                UserId = userId,
+                                ShippingAddressId = newshippAddrResult.Id,
+                                OrderItems = orderItems,
+                                CustomerFirstname = model.FirstName,
+                                CustomerSurname = model.SurName,
+                                CustomerEmail = ""
                             };
-                            await _cartApi.Put(cart.Id, cartRequest);
+
+
+                            var orderResult = await _orderApi.Post(orderRequest);
+                            if (orderResult.IsSuccessStatusCode && orderResult.Content.IsSuccess)
+                            {
+                                var neworderResult = orderResult.Content.ResultData;
+                                cart.Locked = true;
+                                CartRequestDto cartRequest = new CartRequestDto
+                                {
+                                    Id = cart.Id,
+                                    Locked = cart.Locked,
+                                    SessionId = cart.SessionId,
+                                    Status = cart.Status,
+                                    UserId = cart.UserId
+                                };
+                                await _cartApi.Put(cart.Id, cartRequest);
+                            }
+
+
+                            return RedirectToAction("Index", "Home");
                         }
-
-
-                        return RedirectToAction("Index", "CheckOut");
                     }
+                    return RedirectToAction("Index", "CheckOut");
                 }
+
                 return RedirectToAction("Index", "CheckOut");
             }
-            return RedirectToAction("Index", "CheckOut");
+            return RedirectToAction("Login", "Account");
         }
 
     }

@@ -1,9 +1,10 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.Product;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
+using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.BrandViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.CategoryViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductViewModels;
+
 using AnılBurakYamaner_Proje.Web.UI.Infrastructure.Helpers;
-using AnılBurakYamaner_Proje.Web.UI.Models.BrandViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Models.CategoryViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -15,12 +16,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
 {
-    [Area("Admin"), Authorize]
+    [Area("Admin"), Authorize(AuthenticationSchemes = "AdminScheme")]
     public class ProductController : Controller
     {
-        private readonly IProductApi _productApi;
+        private readonly IAdminProductApi _productApi;
         private readonly ICategoryApi _categoryApi;
         private readonly IBrandApi _brandApi;
         private readonly IMapper _mapper;
@@ -28,7 +30,7 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
         
 
         public ProductController(
-            IProductApi productApi,
+            IAdminProductApi productApi,
             IMapper mapper,
             IWebHostEnvironment env,
             ICategoryApi categoryApi,

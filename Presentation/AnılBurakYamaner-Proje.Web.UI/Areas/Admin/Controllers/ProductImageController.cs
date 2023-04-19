@@ -1,7 +1,7 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.ProductImage;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Models.ProductImageViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductImageViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.ProductViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -14,11 +14,11 @@ using System.Threading.Tasks;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
 {
-    [Area("Admin"), Authorize]
+    [Area("Admin"), Authorize(AuthenticationSchemes = "AdminScheme")]
     public class ProductImageController : Controller
     {
         private readonly IProductImageApi _productImageApi;
-        private readonly IProductApi _productApi;
+        private readonly IAdminProductApi _productApi;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _env;
 
@@ -27,7 +27,7 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
             IProductImageApi productImageApi,
             IMapper mapper,
             IWebHostEnvironment env,
-            IProductApi productApi)
+            IAdminProductApi productApi)
 
         {
             _productImageApi = productImageApi;

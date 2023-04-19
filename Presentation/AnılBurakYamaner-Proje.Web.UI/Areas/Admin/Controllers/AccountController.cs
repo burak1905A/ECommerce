@@ -24,16 +24,13 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
     {
         private readonly IAccountApi _accountApi;
         private readonly IMapper _mapper;
-        private readonly ICartApi _cartApi;
-        private readonly ICartItemApi _cartItemApi;
-        private readonly IUserApi _userApi;
+     
+        private readonly IAdminUserApi _userApi;
 
-        public AccountController(IAccountApi accountApi, IMapper mapper, ICartApi cartApi, ICartItemApi cartItemApi, IUserApi userApi)
+        public AccountController(IAccountApi accountApi, IMapper mapper, IAdminUserApi userApi)
         {
             _accountApi = accountApi;
             _mapper = mapper;
-            _cartApi = cartApi;
-            _cartItemApi = cartItemApi;
             _userApi = userApi;
         }
         public IActionResult Login()
@@ -52,7 +49,10 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var loginRequest = await _accountApi.Login(_mapper.Map<LoginRequestDto>(request));
+                var requestDto = _mapper.Map<LoginRequestDto>(request);
+                requestDto.LoginType = "Admin";
+
+                var loginRequest = await _accountApi.Login(requestDto);
                 if (loginRequest.IsSuccessStatusCode && loginRequest.Content.IsSuccess)
                 {
                     UserResponseDto user = loginRequest.Content.ResultData;

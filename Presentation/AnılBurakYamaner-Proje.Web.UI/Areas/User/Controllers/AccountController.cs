@@ -52,7 +52,11 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.User.Controllers
         {
             if (ModelState.IsValid)
             {
-                var loginRequest = await _accountApi.Login(_mapper.Map<LoginRequestDto>(request));
+                var requestDto = _mapper.Map<LoginRequestDto>(request);
+                requestDto.LoginType = "User";
+
+                var loginRequest = await _accountApi.Login(requestDto);
+                
                 if (loginRequest.IsSuccessStatusCode && loginRequest.Content.IsSuccess)
                 {
                     UserResponseDto user = loginRequest.Content.ResultData;
@@ -78,7 +82,7 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.User.Controllers
                         AcceessToken = user.AcceessToken
                     };
 
-                    HttpContext.Response.Cookies.Append("AnılBurakYamaner-ProjeAccessToken", JsonConvert.SerializeObject(cookieModel).Encrypt());
+                    HttpContext.Response.Cookies.Append("AnılBurakYamaner-UserProjeAccessToken", JsonConvert.SerializeObject(cookieModel).Encrypt());
                     await HttpContext.SignInAsync(principal);
 
                     if (HttpContext.Request.Cookies.ContainsKey("AnılBurakYamaner-ProjeCart"))
@@ -194,7 +198,7 @@ namespace AnılBurakYamaner_Proje.Web.UI.Areas.User.Controllers
         }
         public async Task<IActionResult> Logout()
         {
-            HttpContext.Response.Cookies.Delete("AnılBurakYamaner-ProjeAccessToken");
+            HttpContext.Response.Cookies.Delete("AnılBurakYamaner-UserProjeAccessToken");
             await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home", new { area = "" });
         }

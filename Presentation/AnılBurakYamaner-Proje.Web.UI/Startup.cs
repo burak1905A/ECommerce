@@ -53,10 +53,18 @@ namespace AnılBurakYamaner_Proje.Web.UI
 
             //Asp.Net Core MVC'de oturum yönetimini Core Identity ile gerçekleştiriyoruz. Core Identity'de Cookie
             //yöntemini kullanıyoruz.
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-              .AddCookie(options =>
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "AdminScheme";
+                options.DefaultChallengeScheme = "AdminScheme";
+            })
+              .AddCookie("UserScheme",options =>
               {
-                  options.LoginPath = "/Account/Login";
+                  options.LoginPath = "/User/Account/Login";
+              })
+              .AddCookie("AdminScheme", options =>
+              {
+                  options.LoginPath = "/Admin/Account/Login";
               });
             services.AddSingleton<ICartHelper, CartHelper>();
         }
@@ -84,7 +92,7 @@ namespace AnılBurakYamaner_Proje.Web.UI
             {
                 endpoints.MapControllerRoute(
                     name: "areas",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    pattern: "{area=User}/{controller=Home}/{action=Index}/{id?}"
                     );
                 endpoints.MapDefaultControllerRoute();
             });
@@ -93,7 +101,8 @@ namespace AnılBurakYamaner_Proje.Web.UI
         {
 
             //RegisterHandler
-            services.AddScoped<AuthTokenHandler>();
+            services.AddScoped<AuthAdminTokenHandler>();
+            services.AddScoped<AuthUserTokenHandler>();
 
             var baseUrl = Configuration
                 .GetSection("Settings")
@@ -113,28 +122,28 @@ namespace AnılBurakYamaner_Proje.Web.UI
                .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-               .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+               .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //Cart
             services.AddRefitClient<ICartApi>()
                .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-               .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+               .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //CartItem
             services.AddRefitClient<ICartItemApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //Category
             services.AddRefitClient<ICategoryApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
 
             //Country
@@ -142,119 +151,133 @@ namespace AnılBurakYamaner_Proje.Web.UI
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //Currency
             services.AddRefitClient<ICurrencyApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //CurrentAccount
             services.AddRefitClient<ICurrentAccountApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //Location
             services.AddRefitClient<ILocationApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //Maillist
             services.AddRefitClient<IMaillistApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //Member
             services.AddRefitClient<IMemberApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //OrderAddress
             services.AddRefitClient<IOrderAddressApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //Order
             services.AddRefitClient<IOrderApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthUserTokenHandler>());
 
             //OrderDetail
             services.AddRefitClient<IOrderDetailApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
-            //Product
-            services.AddRefitClient<IProductApi>()
+            //UserProduct
+            services.AddRefitClient<IUserProductApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthUserTokenHandler>());
+
+            //AdminProduct
+            services.AddRefitClient<IAdminProductApi>()
+                .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
+                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
+                .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //ProductComment
             services.AddRefitClient<IProductCommentApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //ProductDetail
             services.AddRefitClient<IProductDetailApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //ProductImage
             services.AddRefitClient<IProductImageApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //ProductPrice
             services.AddRefitClient<IProductPriceApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //ShippingAddress
             services.AddRefitClient<IShippingAddressApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthUserTokenHandler>());
 
             //Town
             services.AddRefitClient<ITownApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
 
             //User
             services.AddRefitClient<IUserApi>()
                 .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
                 .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
-                .AddHttpMessageHandler((s) => s.GetService<AuthTokenHandler>());
+                .AddHttpMessageHandler((s) => s.GetService<AuthUserTokenHandler>());
+
+            //AdminUser
+            services.AddRefitClient<IAdminUserApi>()
+                .ConfigureHttpClient(client => { client.BaseAddress = baseUri; })
+                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(60)))
+                .AddTransientHttpErrorPolicy(p => p.RetryAsync(3))
+                .AddHttpMessageHandler((s) => s.GetService<AuthAdminTokenHandler>());
         }
     }
 }

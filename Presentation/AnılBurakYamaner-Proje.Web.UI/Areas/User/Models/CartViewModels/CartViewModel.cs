@@ -2,7 +2,7 @@
 using System;
 using AnılBurakYamaner_Proje.Common.Enums;
 using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.CartItemViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Models.MemberViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.MemberViewModels;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.CartViewModels
 {

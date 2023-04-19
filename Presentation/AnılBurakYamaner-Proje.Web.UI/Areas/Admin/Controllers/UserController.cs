@@ -10,12 +10,12 @@ using System;
 using AnılBurakYamaner_Proje.Web.UI.Infrastructure.Helpers;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using AnılBurakYamaner_Proje.Web.UI.Models.UserViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.UserViewModels;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
 {
 
-    [Area("Admin"), Authorize]
+    [Area("Admin"), Authorize(AuthenticationSchemes = "AdminScheme")]
     public class UserController : Controller
     {
         private readonly IUserApi _userApi;

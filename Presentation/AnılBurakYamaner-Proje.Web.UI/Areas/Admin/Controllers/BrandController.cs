@@ -1,6 +1,6 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.Brand;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Models.BrandViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.BrandViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
 {
-    [Area("Admin"), Authorize]
+    [Area("Admin"), Authorize(AuthenticationSchemes = "AdminScheme")]
     public class BrandController : Controller
     {
         private readonly IBrandApi _brandApi;

@@ -1,5 +1,5 @@
 ﻿using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.ProductViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -10,10 +10,10 @@ namespace AnılBurakYamaner_Proje.Web.UI.ViewComponents
 {
     public class ProductViewComponent : ViewComponent
     {
-        private readonly IProductApi _productApi;
+        private readonly IUserProductApi _productApi;
         private readonly IMapper _mapper;
 
-        public ProductViewComponent(IProductApi productApi, IMapper mapper)
+        public ProductViewComponent(IUserProductApi productApi, IMapper mapper)
         {
             _productApi = productApi;
             _mapper = mapper;

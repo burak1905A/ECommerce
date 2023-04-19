@@ -1,5 +1,5 @@
 ﻿using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Models.BrandViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.BrandViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

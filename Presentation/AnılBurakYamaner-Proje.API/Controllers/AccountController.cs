@@ -45,7 +45,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
                 {
                     UserResponseDto rm = _mapper.Map<UserResponseDto>(result);
                     rm.Password = null;
-                    rm.AcceessToken = GetAcceessToken(rm, request.Password);
+                    rm.AcceessToken = GetAcceessToken(rm, request.Password,request.LoginType);
                     return new WebApiResponse<UserResponseDto>(true, "Success", rm);
                 }
             }
@@ -53,7 +53,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
                     .Select(x => x.ErrorMessage).ToList().ToString());
         }
 
-        private GetAcceessTokenDto GetAcceessToken(UserResponseDto rm, string password)
+        private GetAcceessTokenDto GetAcceessToken(UserResponseDto rm, string password,string loginType)
         {
             var claims = new List<Claim>
             {
@@ -78,7 +78,7 @@ namespace AnılBurakYamaner_Proje.API.Controllers
 
             return new GetAcceessTokenDto
             {
-                TokenType = "AnılBurakYamaner_ProjeAccessToken",
+                TokenType = $"AnılBurakYamaner_{loginType}ProjeAccessToken",
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                 Expires = ticks,
                 RefreshToken = $"{rm.Email}_{password}_{ticks}".Encrypt()
@@ -102,7 +102,8 @@ namespace AnılBurakYamaner_Proje.API.Controllers
             {
                 UserResponseDto rm = _mapper.Map<UserResponseDto>(result);
                 rm.Password = null;
-                rm.AcceessToken = GetAcceessToken(rm, userInfo[1]);
+                
+                rm.AcceessToken = GetAcceessToken(rm, userInfo[1] ,request.LoginType);
                 return new WebApiResponse<GetAcceessTokenDto>(true, "Success", rm.AcceessToken);
             }
             return new WebApiResponse<GetAcceessTokenDto>(false, "User Not Found");

@@ -4,7 +4,7 @@ using AnılBurakYamaner_Proje.Common.Dtos.Category;
 using AnılBurakYamaner_Proje.Common.Extensions;
 using AnılBurakYamaner_Proje.Common.Models;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.ProductViewModels;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Refit;

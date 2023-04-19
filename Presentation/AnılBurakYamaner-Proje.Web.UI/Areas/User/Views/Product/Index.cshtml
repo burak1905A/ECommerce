@@ -1,0 +1,63 @@
+﻿@model Tuple<ProductViewModel, UserViewModel>
+@{
+    ViewData["Title"] = "Post";
+    Layout = "_UserLayout";
+}
+<style>
+    .blog-img {
+        height: 200px;
+    }
+</style>
+<section class="main-content p-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mr-50">
+                <div class="single-page-content">
+                    <div class="standard-post">
+                        <div class="blog-item">
+                            <div class="blog-img">
+                                <img style="max-height:100%" src="@Model.Item1.Barcode" alt="" />
+
+                            </div>
+                            <div class="blog-info">
+                                <ul class="meta">
+                                    @* <li>@Model.Item1.CreatedDate</li>*@
+                                    <br />
+                                    <br />
+
+                                    <h3 class="post-title">@Model.Item1.FullName</h3>
+                                    <br />
+                                    <br />
+                                </ul>
+                                <h2 class="post-title">@Model.Item1.ProductPrice TL</h2>
+                                <br />
+                                <br />
+                                <br />
+
+
+
+                                <h4 class="post-title">@Model.Item1.ProductDetail</h4>
+
+                            </div>
+
+                            @Html.Raw(Model.Item1.Slug)
+                            <div class="post-author-info">
+                                <div class="author-img">
+                                    <img src="@Model.Item2.ImageUrl" alt="" />
+                                    <div class="author-info">
+                                        <h3>
+                                            @*<a href="#" title="">@Model.Item1.User.FirstName @Model.Item1.User.LastName </a>*@
+                                        </h3>
+                                        @* <p>@Model.Item2.FirstName @Model.Item2.LastName isimli yazarımız @Model.Item2.CreatedDate tarihinde aramıza katılmıştır.</p>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @await Component.InvokeAsync("Product")
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

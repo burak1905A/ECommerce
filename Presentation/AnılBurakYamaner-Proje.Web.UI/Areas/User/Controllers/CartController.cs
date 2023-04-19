@@ -5,7 +5,7 @@ using AnılBurakYamaner_Proje.Common.Models;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
 using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.CartItemViewModels;
 using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.CartViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.ProductViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Areas.User.Controllers
 {
+    [Area("User")]
     public class CartController : Controller
     {
 

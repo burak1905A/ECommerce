@@ -8,5 +8,7 @@ namespace AnılBurakYamaner_Proje.Common.Models
     {
         public string Email { get; set; }
         public string Refresh_Token { get; set; }
+
+        public string LoginType { get; set; }
     }
 }

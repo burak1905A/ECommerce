@@ -1,6 +1,6 @@
 ﻿using AnılBurakYamaner_Proje.Common.Enums;
 using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.CartViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.ProductViewModels;
 using System;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.CartItemViewModels

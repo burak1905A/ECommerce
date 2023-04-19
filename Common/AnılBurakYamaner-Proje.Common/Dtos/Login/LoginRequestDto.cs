@@ -8,5 +8,7 @@ namespace AnılBurakYamaner_Proje.Common.Dtos.Login
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
+
+        public string LoginType { get; set; }
     }
 }

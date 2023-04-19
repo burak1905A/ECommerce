@@ -1,7 +1,7 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.Product;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Models.ProductViewModels;
-using AnılBurakYamaner_Proje.Web.UI.Models.UserViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.ProductViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.User.Models.UserViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,24 +11,24 @@ using System.Threading.Tasks;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Areas.User.Controllers
 {
-
+    [Area("User")]
     public class HomeController : Controller
     {
-        private readonly ICategoryApi _categoryApi;
+       
         private readonly IUserApi _userApi;
         private readonly IMapper _mapper;
-        private readonly IProductApi _productApi;
+        private readonly IUserProductApi _productApi;
         //private readonly IProductDetailApi _productDetailApi;
         /* private readonly IBrandApi _brandApi*//*;*/
         public HomeController(
-            ICategoryApi categoryApi,
+            
             IUserApi userApi,
             IMapper mapper,
-            IProductApi productApi
+            IUserProductApi productApi
             //IProductDetailApi productDetailApi
             /*IBrandApi brandApi*/)
         {
-            _categoryApi = categoryApi;
+            
             _userApi = userApi;
             _mapper = mapper;
             _productApi = productApi;

@@ -1,6 +1,6 @@
 ﻿using AnılBurakYamaner_Proje.Common.Dtos.Category;
 using AnılBurakYamaner_Proje.Web.UI.APIs;
-using AnılBurakYamaner_Proje.Web.UI.Models.CategoryViewModels;
+using AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Models.CategoryViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AnılBurakYamaner_Proje.Web.UI.Areas.Admin.Controllers
 {
-    [Area("Admin"), Authorize]
+    [Area("Admin"), Authorize(AuthenticationSchemes = "AdminScheme")]
     public class CategoryController : Controller
     {
         private readonly ICategoryApi _categoryApi;
