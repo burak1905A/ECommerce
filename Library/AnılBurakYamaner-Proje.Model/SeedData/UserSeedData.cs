@@ -23,7 +23,8 @@ namespace AnılBurakYamaner_Proje.Model.SeedData
                     LastName = "admin",
                     Title = "Admin",
                     ImageUrl = "/",
-                    LastIPAddress = "127.0.0.1"
+                    LastIPAddress = "127.0.0.1",
+                    IsAdmin = true,
                 }); ; 
         }
     }
